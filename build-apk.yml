@@ -1,0 +1,48 @@
+name: Build Android APK
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Build APK
+        run: |
+          chmod +x ./gradlew
+          ./gradlew assembleDebug
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: AI-Quotex-Scanner-debug-apk
+          path: app/build/outputs/apk/debug/*.apk
+          if-no-files-found: error
+
+### ✅ ধাপ ৩: ফাইলটি সেভ করুন
+১. স্ক্রিনের উপরে ডান পাশে সবুজ **Commit changes** বাটনে ক্লিক করুন।
+২. আবার **Commit changes** চাপুন।
+৩. ফাইলটি `main` ব্রাঞ্চে সেভ করুন।
+
+### ✅ ধাপ ৪: APK তৈরি করুন
+১. রিপোজিটরির উপরে **Actions** ট্যাবে যান।
+২. `Build Android APK` নির্বাচন করুন।
+৩. **Run workflow** বাটন থাকলে সেটিতে চাপুন।
+৪. বিল্ড শেষ হওয়া পর্যন্ত অপেক্ষা করুন।
+
+**⚠️ গুরুত্বপূর্ণ:** আপনার রিপোজিটরিতে `gradlew`, `app/build.gradle` অথবা প্রয়োজনীয় Android Gradle ফাইলগুলো না থাকলে এই কোড দিয়ে APK তৈরি হবে না। আপনার আগের স্ক্রিনশটে শুধু কয়েকটি ফাইল দেখা গেছে, তাই আগে বিল্ড চালিয়ে ফলাফল দেখতে হবে।
+
+**এখন প্রথমে কোডটি পেস্ট করে `Commit changes` করুন। তারপর পরবর্তী স্ক্রিনশট পাঠান।** আমি পরবর্তী ধাপ দেখিয়ে দেব।

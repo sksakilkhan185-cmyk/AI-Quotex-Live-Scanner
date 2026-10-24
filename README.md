@@ -1,0 +1,1 @@
+# AI-Quotex-Live-Scanner
